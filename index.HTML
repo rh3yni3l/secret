@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>May Chance Ako?</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffe0eb, #ffc2d8, #fff0f5);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #8c3157;
+}
+
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    padding: 30px 20px;
+}
+
+.heart {
+    font-size: 65px;
+    margin-bottom: 20px;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    50% { transform: scale(1.15); }
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 35px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    min-height: 65px;
+}
+
+button {
+    border: none;
+    padding: 13px 35px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#yes {
+    background: #ff4f87;
+    color: white;
+}
+
+#yes:hover {
+    background: #e83270;
+}
+
+#no {
+    background: white;
+    color: #ff4f87;
+    position: fixed;
+    left: 55%;
+    top: 65%;
+    z-index: 10;
+}
+
+/* SUCCESS SCREEN */
+
+#success {
+    display: none;
+}
+
+.card {
+    background: white;
+    width: 220px;
+    height: 270px;
+    margin: 30px auto;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px #d8759a55;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card .emoji {
+    font-size: 75px;
+}
+
+.card h2 {
+    margin-top: 15px;
+    font-size: 21px;
+}
+
+.card small {
+    margin-top: 10px;
+    color: #bd7994;
+}
+
+#letter {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #00000066;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 20;
+}
+
+.letter-content {
+    background: #fffafc;
+    max-width: 380px;
+    width: 100%;
+    padding: 35px 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px #0002;
+}
+
+.letter-content h2 {
+    color: #ed4e83;
+    margin-bottom: 20px;
+}
+
+.letter-content p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.close {
+    background: #ff4f87;
+    color: white;
+    padding: 10px 25px;
+}
+
+.hidden {
+    display: none !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="question">
+
+    <div class="heart">💗</div>
+
+    <h1>Ethan</h1>
+
+    <p>
+        May chance ba ako sa'yo? 🥺
+    </p>
+
+    <div class="buttons">
+        <button id="yes" onclick="sayYes()">YES</button>
+    </div>
+
+</div>
+
+<button id="no" onmouseenter="moveNo()"
+        ontouchstart="moveNo()"
+        onclick="moveNo()">
+    wala
+</button>
+
+<!-- YES SCREEN -->
+
+<div class="container" id="success">
+
+    <div class="heart">💖</div>
+
+    <h1>YEHEYYY! 🥹</h1>
+
+    <p>I knew it! HAHAHA! 💗</p>
+
+    <p>But wait... I have something for you.</p>
+
+    <div class="card" onclick="openLetter()">
+        <div class="emoji">💌</div>
+        <h2>Open Me</h2>
+        <small>Click this little card ♡</small>
+    </div>
+
+</div>
+
+<!-- LETTER -->
+
+<div id="letter">
+    <div class="letter-content">
+
+        <h2>For You 💗</h2>
+
+        <p>
+            Hiiii! HAHAHA! ❤️
+            <br><br>
+            Thank you for choosing YES!
+            I just want you to know that
+            you're someone special to me.
+            <br><br>
+            I don't know what the future holds,
+            but I hope we can get to know
+            each other more.
+            <br><br>
+            No pressure, just genuine feelings. 🥰
+            <br><br>
+            <b>From someone who likes you. 💗</b>
+        </p>
+
+        <button class="close" onclick="closeLetter()">
+            Close 💕
+        </button>
+
+    </div>
+</div>
+
+<script>
+
+const no = document.getElementById("no");
+
+function moveNo() {
+
+    const maxX = window.innerWidth - no.offsetWidth;
+    const maxY = window.innerHeight - no.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    no.style.left = randomX + "px";
+    no.style.top = randomY + "px";
+}
+
+function sayYes() {
+
+    document.getElementById("question").style.display = "none";
+    document.getElementById("no").classList.add("hidden");
+
+    document.getElementById("success").style.display = "block";
+
+}
+
+function openLetter() {
+    document.getElementById("letter").style.display = "flex";
+}
+
+function closeLetter() {
+    document.getElementById("letter").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
